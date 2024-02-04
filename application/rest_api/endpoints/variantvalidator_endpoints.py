@@ -1,9 +1,9 @@
-from flask_restplus import Namespace, Resource
-from . import request_parser
-from . import representations
+from flask_restx import Namespace, Resource
+from utils import request_parser
+from utils import representations
 import requests
 from requests.exceptions import ConnectionError
-from . import exceptions
+from utils import exceptions
 
 """
 Create a parser object locally
@@ -47,7 +47,7 @@ class VariantValidatorClass(Resource):
     def get(self, genome_build, variant_description, select_transcripts):
 
         # Make a request to the current VariantValidator rest-API
-        url = '/'.join(['https://rest.variantvalidator.org/variantvalidator',
+        url = '/'.join(['https://rest.variantvalidator.org/VariantValidator/variantvalidator',
                         genome_build,
                         variant_description,
                         select_transcripts
@@ -55,7 +55,7 @@ class VariantValidatorClass(Resource):
         try:
             validation = requests.get(url)
         except ConnectionError:
-            raise exceptions.RemoteConnectionError('https://rest.variantvalidator.org/variantvalidator currently '
+            raise exceptions.RemoteConnectionError('https://rest.variantvalidator.org//VariantValidator/variantvalidator currently '
                                                    'unavailable')
         content = validation.json()
 
